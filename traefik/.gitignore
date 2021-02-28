@@ -1,0 +1,13 @@
+/bin/*
+!/bin/dcx
+/.env
+/docker-compose.yml
+/build/*
+!/build/.gitkeep
+!/build/yaml-merge
+!/build/env-merge
+/compose/*/*.yaml
+/compose/*/*.yml
+/env/*/*.env
+conf/*
+!conf/.gitkeep

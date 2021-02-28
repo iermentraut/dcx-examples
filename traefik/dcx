@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e
+CWD=$(cd "$(dirname "$BASH_SOURCE")"; cd -P "$(dirname "$(readlink "$BASH_SOURCE" || echo "$BASH_SOURCE")")" &> /dev/null; pwd)
+
+# @TODO docker run --rm -v ${CWD}/:/app --entrypoint bash env-merge -- checksumdir --follow-links -a sha256 /app/env
+printf "dcx# creating/updating .env file...\n"
+docker build \
+  -q \
+  -t env-merge \
+  -f ${CWD}/build/env-merge/Dockerfile \
+  ${CWD}/build/env-merge
+
+docker run --rm -v ${CWD}/:/app env-merge
+printf "dcx# ...done\n"
+
+# @TODO docker run --rm -v ${CWD}/:/app --entrypoint bash env-merge -- checksumdir --follow-links -a sha256 /app/compose
+printf "dcx# creating/updating docker-compose.yml file...\n"
+docker build \
+    -q \
+    -t yaml-merge \
+    -f ${CWD}/build/yaml-merge/Dockerfile \
+    ${CWD}/build/yaml-merge
+
+docker run --rm \
+    -v ${CWD}/compose:/yaml/compose.d \
+    yaml-merge > ${CWD}/docker-compose.yml
+printf "dcx# ...done\n"
