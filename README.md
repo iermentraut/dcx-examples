@@ -1,12 +1,11 @@
-# dcx-examples (work in progress)
+# dcx examples (work in progress)
+
+## Wordpress
 
 ```
-cd traefik
 docker network create traefik
+cd traefik
 docker-compose up -d
-```
-
-```
-cd wordpress
+cd ../wordpress
 docker-compose up -d
 ```
