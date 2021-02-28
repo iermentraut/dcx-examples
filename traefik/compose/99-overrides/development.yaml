@@ -1,0 +1,6 @@
+---
+services:
+  traefik:
+    # volumes can not be overwritten, they will be merged by Docker
+    volumes:
+      - ${PWD}/conf/traefik/traefik-dev.yaml:/etc/traefik/traefik.yaml

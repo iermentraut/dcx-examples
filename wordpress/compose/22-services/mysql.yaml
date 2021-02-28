@@ -1,0 +1,11 @@
+---
+services:
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - mysql:/var/lib/mysql
+    restart: always
+    env_file:
+      - ${PWD}/.env
+    networks:
+      wordpress: {}
